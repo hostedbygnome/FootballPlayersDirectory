@@ -1,0 +1,107 @@
+﻿@page
+@using FootballPlayersDirectory.Models
+@using System.Collections
+@model CreateFootballPlayerModel
+@{
+    ViewData["Title"] = "Create football player";
+}
+
+<body>
+    <div class="position-absolute start-50 translate-middle-x">
+        <h1 class="display-4 text-center">Add player</h1>
+        <div class="group">
+            <form method="post">
+                <div class="row mx-auto">
+                    <div class="col-md-6 p-2">
+                        <div class="form-floating">
+                            <input asp-for="FootballPlayer.FirstName" class="form-control" placeholder="text" required pattern="^[A-Za-zА-Яа-яЁё0-9]+$"/>
+                            <label asp-for="FootballPlayer.FirstName">First name</label>
+                            <span asp-validation-for="FootballPlayer.FirstName" class="text text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 p-2">
+                        <div class="form-floating">
+                            <input asp-for="FootballPlayer.SecondName" class="form-control" placeholder="text" required pattern="^[A-Za-zА-Яа-яЁё0-9]+$"/>
+                            <label asp-for="FootballPlayer.SecondName">Second name</label>
+                            <span asp-validation-for="FootballPlayer.SecondName" class="text text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mx-auto">
+                    <div class="col-md-6 p-2">
+                        <div class="form-floating">
+                            <select class="form-select"
+                                asp-for="FootballPlayer.Gender"
+                                asp-items="Html.GetEnumSelectList<Genders>()"></select>
+                            <label asp-for="FootballPlayer.Gender" class="form-label">Gender</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 p-2">
+                        <div class="form-floating">
+                            <input type="date" asp-for="FootballPlayer.DateBirth" class="form-control" placeholder="text" required pattern="^[A-Za-zА-Яа-яЁё0-9]+$"/>
+                            <label asp-for="FootballPlayer.DateBirth">Date of birth</label>
+                            <span asp-validation-for="FootballPlayer.DateBirth" class="text text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-cols-1 mx-auto p-2">
+                    <div class="form-floating">
+                        <select class="form-select" placeholder="text" asp-for="@Model.TeamType" id="choiceTeamType" onchange="
+                            if (document.getElementById('choiceTeamType').value === 'new') 
+                            {
+                                $('#new_team').show();
+                                $('#existing_team').hide();
+                            } 
+                            else 
+                            {
+                                $('#existing_team').show();
+                                $('#new_team').hide();
+                            }">
+                            <option value="existing" checked>
+                                Select from existing teams
+                            </option>
+                            <option value="new"> 
+                                Create a new team
+                            </option></select>
+                        <label class="form-label">Select the mode for adding a team</label>
+                    </div>
+                </div>
+                <div class="row mx-auto">
+                    <div class="col-md-6 p-2" id="existing_team">
+                        <div class="form-floating">
+                            <select class="form-select"
+                            asp-for="ExistingTeamName"
+                            asp-items="@Model.TeamsNames()"></select>
+                            <label asp-for="ExistingTeamName" class="form-label">Team name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 p-2" id="new_team" style="display:none">
+                        <div class="form-floating">
+                            <input asp-for="NewTeamName" class="form-control" placeholder="text"/>
+                            <label asp-for="NewTeamName">Team name</label>
+                            <span asp-validation-for="NewTeamName" class="text text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 p-2">
+                        <div class="form-floating">
+                            <select class="form-select"
+                            asp-for="FootballPlayer.Country"
+                            asp-items="Html.GetEnumSelectList<Countries>()"></select>
+                            <label asp-for="FootballPlayer.Country" class="form-label">Country</label>
+                        </div>
+                    </div>
+                </div>    
+                <div class="row-cols-1 mx-auto p-2">
+                    <button class="btn btn-outline-dark" type="submit">Submit football player</button>
+                </div>
+            </form>
+            <div class="row-cols-1 mx-auto p-2">
+                <a class="btn btn-outline-dark" href="/Index" title="Football players list" type="submit">To football players</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+
+
